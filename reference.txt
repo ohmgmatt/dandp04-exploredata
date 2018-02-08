@@ -1,0 +1,23 @@
+Works References
+Exploratory Data Analysis of White Wines
+
+
+https://stackoverflow.com/questions/6957549/overlaying-histograms-with-ggplot2-in-r
+
+https://stackoverflow.com/questions/8599685/how-to-change-correlation-text-size-in-ggpairs
+
+http://ggplot2.tidyverse.org/reference/aes_group_order.html
+
+http://www.sthda.com/english/wiki/ggplot2-box-plot-quick-start-guide-r-software-and-data-visualization
+
+https://stackoverflow.com/questions/29966582/ggplot-geom-point-with-colors-based-on-specific-discrete-values
+
+http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually
+
+http://sape.inf.usi.ch/quick-reference/ggplot2/shape
+
+http://ggplot2.tidyverse.org/reference/labs.html
+
+http://environmentalcomputing.net/plotting-with-ggplot-adding-titles-and-axis-names/
+
+https://www.rdocumentation.org/packages/ggplot2/versions/2.1.0/topics/element_text
