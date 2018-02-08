@@ -135,15 +135,15 @@ ggplot(wines, aes(total.sulfur.dioxide)) + geom_histogram(binwidth = 5) +
 free_sd <- data.frame(sulfur.dioxide = wines$free.sulfur.dioxide,
                       y = 'free.sulfur.dioxide')
 total_sd <- data.frame(sulfur.dioxide = wines$total.sulfur.dioxide,
-                      y = 'free.sulfur.dioxide')
+                      y = 'total.sulfur.dioxide')
 suldio <- rbind(free_sd, total_sd)
 
-ggplot(suldio,aes(x = sulfur.dioxide)) +
-  geom_histogram(data =free_sd,fill = 'blue',
-                 alpha =0.5, binwidth = 5) +
-  geom_histogram(data = total_sd, fill = 'red',
-                 alpha = 0.5, binwidth = 5) +
-  coord_cartesian(xlim = c(0, 450))
+ggplot(suldio, aes(x = sulfur.dioxide, fill = y)) +
+  geom_histogram(data = free_sd, alpha = 0.6, binwidth = 5) + 
+  geom_histogram(data = total_sd, alpha = 0.6, binwidth = 5) +
+  scale_fill_manual(values = c("navy", "gold")) + 
+#  geom_histogram(alpha = 0.5, binwidth = 5) + 
+  coord_cartesian(xlim = c(0, 300))
 
 
 summary(wines$free.sulfur.dioxide)
