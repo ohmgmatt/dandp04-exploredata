@@ -229,21 +229,32 @@ for each variable was consistent in how it should be presented.
 First, let's look at how each variable relates to each other.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Bivariate_Plots}
-ggpairs(wines,
-        upper = list(continuous = wrap("cor", size = 4)),
-        lower = list(continuous = wrap("points", size = 1, alpha = 0.4)))
+#ggpairs(wines,
+#        upper = list(continuous = wrap("cor", size = 2)),
+#        lower = list(continuous = wrap("points", size = 1, alpha = 0.4))) + 
+#        theme(axis.text = element_blank())
+
+#At the advice of a Udacity reviewer, I've changed the ggpairs function into a
+#ggcorr since I only used the correlations. 
+#https://briatte.github.io/ggcorr/
+
+ggcorr(wines[,2:13], size = 2,label = TRUE, hjust = .7, label_size = 2, label_round = 3,
+       layout.exp = 1, low = 'firebrick1', mid='white', high='lightblue3')
 ```
 
+
 From this, we can see that there is no clear indication of how the quality of
-a wine will be based on a single chemical property. There is no correlation
-between any of the 11 variables and quality of wine.
+a wine will be based on a single chemical property. There is no strong 
+correlation between any of the 11 variables and quality of wine. The strongest
+correlation would be alcohol content to quality with a correlation of .436.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+#I included this since this was an initial discovery but I do
+#proceed to claim that it is not the best graph for telling
+#the audience much of anything. 
+
 ggplot(wines, aes(x = quality, y = alcohol)) +
-  geom_point() +
-  geom_smooth(method = 'lm')
-
-
+  geom_point()
 ```
 
 While this is interesting to see that wines with a quality of 9 would only have
