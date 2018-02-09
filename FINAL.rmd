@@ -263,6 +263,9 @@ small sample size. This graph does not really tell us much other than quality of
 wines widely ranges in alcohol content.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+#Was recommended to include jitter points but I feel
+#that it will overclutter the graph.
+
 ggplot(wines, aes(x = quality, y = alcohol, group = quality)) +
   geom_boxplot(outlier.color = 'red', outlier.size = 1) +
   stat_summary(fun.y = mean, geom = 'point', color = 'blue', size = 2) +
@@ -504,33 +507,48 @@ but I believe together, they may be able to provide guidance.
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Multivariate_Plots}
-ggplot(wines, aes(x = residual.sugar, y = density,
-                  color = as.factor(quality))) +
-  geom_point(alpha = .75) +
-  scale_color_brewer(type = 'qual',palette="Paired", direction = -1) +
-  coord_cartesian(xlim  = c(0, quantile(wines$residual.sugar,.999)),
-                  ylim = c(.985, quantile(wines$density, .999))) +
-  geom_smooth(inherit.aes = FALSE, aes(x = wines$residual.sugar, y = density),
-              method = 'lm') +
+#ggplot(wines, aes(x = residual.sugar, y = density,
+#                  color = as.factor(quality))) +
+#  geom_point(alpha = .75) +
+#  scale_color_brewer(type = 'qual',palette="Paired", direction = -1) +
+#  coord_cartesian(xlim  = c(0, quantile(wines$residual.sugar,.999)),
+#                  ylim = c(.985, quantile(wines$density, .999))) +
+#  geom_smooth(inherit.aes = FALSE, aes(x = wines$residual.sugar, y = density),
+#              method = 'lm') +
+#  xlab("Residual.Sugar < 99.9%") +
+#  ylab("Density < 99.9%")
+
+#At the advice of a reviewer, I have changed the palette to a continuous scale since
+#quality is a ranked system.I have also included separate regression lines for each.
+
+
+ggplot(wines, aes(x = residual.sugar, y = density, 
+                  color = as.factor(quality))) + 
+  geom_point(alpha = .75, size =1) + 
+  geom_smooth(method = 'lm', se = FALSE, size = 1) + 
+  scale_color_brewer(direction = 1,
+                     guide=guide_legend(title='Quality'),
+                     palette = 'BuPu') + 
+  coord_cartesian(xlim = c(0, quantile(wines$residual.sugar,.999)),
+                  ylim = c(.985, quantile(wines$density,.999))) + 
   xlab("Residual.Sugar < 99.9%") +
   ylab("Density < 99.9%")
-
-
-
 ```
 
 When we include the quality of each point to the density vs residual sugar
-graph, we see can see an interesting separation. Those below the trend line are
-mostly wines with high quality. Very few low quality wines make it. It makes
-sense since we would like white wines to have a lighter taste. When sugar levels
-are low, we make up for quality through the lightness of the drink. As sugar
-levels rise, the density of the sugar and quality become muddled and there is
-less of a clear distinction.
+graph, we can see an interesting separation. Those in the lower have are mostly
+wines with high quality. Very few low quality wines are in the lower half. It
+makes sense since we would like white wiens to have a lighter taste. When sugar
+levels are low, we make up for quality through the lightness of the drink. As
+sugar levels rise, the density of the sugar and the quality become muddled
+and tehre is less of a clear distinction. The regression lines depict this as
+well. Qualities of 7, 8, or 9 all start from a low density while lower quality
+wines start from a higher density. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(wines, aes(x = alcohol, y = density, color = as.factor(quality))) +
   geom_point(alpha = .7) +
-  scale_color_brewer(type = 'qual',palette="Paired", direction = -1) +
+  scale_color_brewer(type = 'qual',palette="BuPu") +
   #geom_smooth(inherit.aes = FALSE, aes(x = alcohol, y = density),method = 'lm') +
   coord_cartesian(ylim = c(.985, quantile(wines$density, .99))) +
   ylab("Density < 99%")
@@ -546,7 +564,7 @@ dominate when alcohol content is below 10 but suddenly seem to disappear.
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(wines, aes(x = pH, y = density, color = as.factor(quality))) +
   geom_point(alpha = .3) +
-  scale_color_brewer(type = 'qual',palette="Paired", direction = -1) +
+  scale_color_brewer(type = 'qual',palette="BuPu") +
   coord_cartesian(ylim = c(.987,1.003))
 ```
 
@@ -641,6 +659,7 @@ will provide a clearer insight.
 ggplot(wines, aes(x = total.free, y = total.sulfur.dioxide,
   color = as.factor(quality))) +
   geom_point() +
+  scale_color_brewer(palette = 'BuPu') +
   coord_cartesian(xlim = c(0, 20),
                   ylim = c(0, 300))
 
@@ -648,6 +667,7 @@ ggplot(wines, aes(x = total.free, y = total.sulfur.dioxide,
 ggplot(wines, aes(x = total.free, y = free.sulfur.dioxide,
                   color = as.factor(quality))) +
   geom_point(alpha = 1/2) +
+  scale_color_brewer(palette = 'BuPu') + 
   coord_cartesian(xlim = c(0, 20),
                   ylim = c(0, 150))
 
@@ -662,6 +682,11 @@ total.free to quality is -.21917 compared to -.175 and .00816.
 ggplot(wines, aes(x = sulphates, y = alcohol, color = as.factor(quality))) +
   geom_point(alpha = .75) +
   scale_color_brewer(palette = 'Set1')
+
+#While I acknowledge that quality is an ordered set, I believe that
+#a discrete qualitative palette is more effective in showing what I want to 
+#describe and discuss. A sequential pallete don't display as stark to a 
+#contract between qualities of 5, 6, and 7.
 ```
 
 This graph was a surprising find since it shows a small grouping of qualities
@@ -684,7 +709,7 @@ alcohol by itself. It went from .435 to .175.
 ggplot(wines, aes(x = chlorides, y = pH, color = as.factor(quality))) +
   geom_point()+
   scale_x_continuous(trans = log10_trans()) +
-  scale_color_brewer(palette = 'Set1')
+  scale_color_brewer(palette = 'BuPu')
 ```
 
 While we would not be able to see a trend between pH and chlorides, when we
