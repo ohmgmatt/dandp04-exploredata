@@ -782,9 +782,9 @@ ggplot(subset(wines, fixed.acidity > f_acid_quant90),
                color = 'red', size = 1, shape = 8) +
   coord_cartesian(ylim = c(8, 12)) +
   labs(x = "Quality",
-       y = "Top 10% of Fixed Acidity",
+       y = "(tartaric acid - g / dm^3)",
        title = "The Average Fixed.Acidity Levels For Each Quality of Wine",
-       subtitle = "Top 10% of Fixed.Acidity Values") +
+       subtitle = "Top 10% of Fixed Acidity Values") +
   plottheme
 
 
@@ -809,13 +809,13 @@ on a much smaller scale.
 ggplot(wines, aes(x = residual.sugar, y = density,
                   color = as.factor(quality))) +
   geom_point(alpha = .8) +
-  scale_color_brewer(palette="Accent", direction = -1) +
+  scale_color_brewer(palette="BuPu") +
   coord_cartesian(xlim  = c(0, quantile(wines$residual.sugar,.999)),
                   ylim = c(.985, quantile(wines$density, .999))) +
   geom_smooth(inherit.aes = FALSE, aes(x = wines$residual.sugar, y = density),
               method = 'lm', color = 'firebrick2') +
-  labs(x = 'Residual Sugar',
-       y = 'Density',
+  labs(x = 'Residual Sugar (g / dm^3)',
+       y = 'Density (g / cm^3)',
        title = 'Scatterplot of Density against Residual Sugar set by Quality',
        subtitle = 'Bottom 99.9% of Each Value Taken',
        color = 'Quality') +
@@ -844,10 +844,10 @@ outliers that extend the limits past a decent view point.
 ### Plot Three
 ```{r echo=FALSE, message=FALSE, warning=FALSE, Plot_Three}
 ggplot(wines, aes(x = sulphates, y = alcohol, color = as.factor(quality))) +
-  geom_point(size = 1.25, shape = 15) +
-  scale_color_brewer(palette = 'Set1') +
-  labs(x = 'Sulphates',
-       y = 'Alcohol',
+  geom_point(size = 1, shape = 15) +
+  scale_color_brewer(palette = 'BuPu') +
+  labs(x = 'Sulphates (potassium sulphate - g / dm3)',
+       y = 'Alcohol (% by volume)',
        title = 'Scatterplot of Alcohol v Sulphates set with Quality',
        color = 'Quality') +
   plottheme
